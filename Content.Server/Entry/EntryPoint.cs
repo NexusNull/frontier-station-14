@@ -34,7 +34,7 @@ namespace Content.Server.Entry
 {
     public sealed class EntryPoint : GameServer
     {
-        internal const string ConfigPresetsDir = "/ConfigPresets/";
+        private const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
 
         private EuiManager _euiManager = default!;
@@ -48,6 +48,12 @@ namespace Content.Server.Entry
         public override void Init()
         {
             base.Init();
+
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            var res = IoCManager.Resolve<IResourceManager>();
+            var logManager = IoCManager.Resolve<ILogManager>();
+
+            LoadConfigPresets(cfg, res, logManager.GetSawmill("configpreset"));
 
             var aczProvider = new ContentMagicAczProvider(IoCManager.Resolve<IDependencyCollection>());
             IoCManager.Resolve<IStatusHost>().SetMagicAczProvider(aczProvider);
