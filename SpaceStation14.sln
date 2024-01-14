@@ -56,7 +56,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSBuild", "MSBuild", "{5040
 		RobustToolbox\MSBuild\Robust.Trimming.targets = RobustToolbox\MSBuild\Robust.Trimming.targets
 		RobustToolbox\MSBuild\Robust.Platform.props = RobustToolbox\MSBuild\Robust.Platform.props
 		RobustToolbox\MSBuild\Robust.Configurations.props = RobustToolbox\MSBuild\Robust.Configurations.props
-		RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets = RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
@@ -106,7 +105,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Packaging", "RobustToolbox\Robust.Packaging\Robust.Packaging.csproj", "{952AAF2A-DF63-4A7D-8094-3453893EBA80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Packaging", "Content.Packaging\Content.Packaging.csproj", "{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Files", "{EC27A16C-9412-4AA6-AE68-CAAB28882802}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -408,38 +406,6 @@ Global
 		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
 		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
 		{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}.Tools|Any CPU.Build.0 = Tools|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.DebugOpt|Any CPU.ActiveCfg = DebugOpt|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
-		{A493616C-338D-47B7-8072-A7F14D034D0B}.Tools|Any CPU.Build.0 = Tools|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.DebugOpt|Any CPU.ActiveCfg = DebugOpt|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B}.Tools|Any CPU.Build.0 = Tools|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.DebugOpt|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.DebugOpt|Any CPU.Build.0 = Debug|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Tools|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}.Tools|Any CPU.Build.0 = Debug|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.DebugOpt|Any CPU.ActiveCfg = Debug|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.DebugOpt|Any CPU.Build.0 = Debug|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Tools|Any CPU.ActiveCfg = Debug|Any CPU
-		{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}.Tools|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -468,9 +434,6 @@ Global
 		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{952AAF2A-DF63-4A7D-8094-3453893EBA80} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{A965CB3B-FD31-44AF-8872-85ABA436098D} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{07CA34A1-1D37-4771-A2E3-495A1044AE0B} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

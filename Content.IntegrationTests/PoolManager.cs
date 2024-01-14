@@ -179,8 +179,38 @@ public static partial class PoolManager
         SetDefaultCVars(options);
         var client = new RobustIntegrationTest.ClientIntegrationInstance(options);
         await client.WaitIdleAsync();
-        await SetupCVars(client, poolSettings);
-        return (client, logHandler);
+        return client;
+    }
+
+    private static void SetupCVars(PoolSettings poolSettings, RobustIntegrationTest.IntegrationOptions options)
+    {
+        foreach (var serverTestCvar in ServerTestCvars)
+        {
+            options.CVarOverrides[serverTestCvar.cvar] = serverTestCvar.value;
+        }
+
+        if (poolSettings.DummyTicker)
+        {
+            options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
+        }
+
+        options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = poolSettings.InLobby.ToString();
+
+        if (poolSettings.DisableInterpolate)
+        {
+            options.CVarOverrides[CCVars.NetInterp.Name] = "false";
+        }
+
+        if (poolSettings.Map != null)
+        {
+            options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
+        }
+
+        options.CVarOverrides[CCVars.ConfigPresetDevelopment.Name] = "false";
+
+        // This breaks some tests.
+        // TODO: Figure out which tests this breaks.
+        options.CVarOverrides[CVars.NetBufferSize.Name] = "0";
     }
 
     /// <summary>
@@ -428,10 +458,112 @@ we are just going to end this here to save a lot of time. This is the exception 
     /// <summary>
     ///     Helper method that retrieves all entity prototypes that have some component.
     /// </summary>
-    public static List<EntityPrototype> GetPrototypesWithComponent<T>(RobustIntegrationTest.IntegrationInstance instance) where T : IComponent
+    public bool MustNotBeReused => Destructive || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
+
+    /// <summary>
+    /// If the given pair must be brand new
+    /// </summary>
+    public bool MustBeNew => Fresh || NoLoadContent || DisableInterpolate || DummyTicker || NoToolsExtraPrototypes;
+
+    /// <summary>
+    /// If the given pair must not be connected
+    /// </summary>
+    public bool NotConnected => NoClient || NoServer || Disconnected;
+
+    /// <summary>
+    /// Set to true if the test will ruin the server/client pair.
+    /// </summary>
+    public bool Destructive { get; init; }
+
+    /// <summary>
+    /// Set to true if the given server/client pair should be created fresh.
+    /// </summary>
+    public bool Fresh { get; init; }
+
+    /// <summary>
+    /// Set to true if the given server should be using a dummy ticker.
+    /// </summary>
+    public bool DummyTicker { get; init; }
+
+    /// <summary>
+    /// Set to true if the given server/client pair should be disconnected from each other.
+    /// </summary>
+    public bool Disconnected { get; init; }
+
+    /// <summary>
+    /// Set to true if the given server/client pair should be in the lobby.
+    /// </summary>
+    public bool InLobby { get; init; }
+
+    /// <summary>
+    /// Set this to true to skip loading the content files.
+    /// Note: This setting won't work with a client.
+    /// </summary>
+    public bool NoLoadContent { get; init; }
+
+    /// <summary>
+    /// Set this to raw yaml text to load prototypes onto the given server/client pair.
+    /// </summary>
+    public string ExtraPrototypes { get; init; }
+
+    /// <summary>
+    /// Set this to true to disable the NetInterp CVar on the given server/client pair
+    /// </summary>
+    public bool DisableInterpolate { get; init; }
+
+    /// <summary>
+    /// Set this to true to always clean up the server/client pair before giving it to another borrower
+    /// </summary>
+    public bool Dirty { get; init; }
+
+    /// <summary>
+    /// Set this to the path of a map to have the given server/client pair load the map.
+    /// </summary>
+    public string Map { get; init; } // TODO for map painter
+
+    /// <summary>
+    /// Set to true if the test won't use the client (so we can skip cleaning it up)
+    /// </summary>
+    public bool NoClient { get; init; }
+
+    /// <summary>
+    /// Set to true if the test won't use the server (so we can skip cleaning it up)
+    /// </summary>
+    public bool NoServer { get; init; }
+
+    /// <summary>
+    /// Overrides the test name detection, and uses this in the test history instead
+    /// </summary>
+    public string TestName { get; set; }
+
+    /// <summary>
+    /// Tries to guess if we can skip recycling the server/client pair.
+    /// </summary>
+    /// <param name="nextSettings">The next set of settings the old pair will be set to</param>
+    /// <returns>If we can skip cleaning it up</returns>
+    public bool CanFastRecycle(PoolSettings nextSettings)
     {
-        var protoMan = instance.ResolveDependency<IPrototypeManager>();
-        var compFact = instance.ResolveDependency<IComponentFactory>();
+        if (Dirty) return false;
+        if (Destructive || nextSettings.Destructive) return false;
+        if (NotConnected != nextSettings.NotConnected) return false;
+        if (InLobby != nextSettings.InLobby) return false;
+        if (DisableInterpolate != nextSettings.DisableInterpolate) return false;
+        if (nextSettings.DummyTicker) return false;
+        if (Map != nextSettings.Map) return false;
+        if (NoLoadContent != nextSettings.NoLoadContent) return false;
+        if (nextSettings.Fresh) return false;
+        if (ExtraPrototypes != nextSettings.ExtraPrototypes) return false;
+        return true;
+    }
+
+    // Prototype hot reload is not available outside TOOLS builds,
+    // so we can't pool test instances that use ExtraPrototypes without TOOLS.
+#if TOOLS
+    private bool NoToolsExtraPrototypes => false;
+#else
+    private bool NoToolsExtraPrototypes => !string.IsNullOrEmpty(ExtraPrototypes);
+#endif
+}
 
         var id = compFact.GetComponentName(typeof(T));
         var list = new List<EntityPrototype>();

@@ -49,12 +49,6 @@ namespace Content.Server.Entry
         {
             base.Init();
 
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
-            var res = IoCManager.Resolve<IResourceManager>();
-            var logManager = IoCManager.Resolve<ILogManager>();
-
-            LoadConfigPresets(cfg, res, logManager.GetSawmill("configpreset"));
-
             var aczProvider = new ContentMagicAczProvider(IoCManager.Resolve<IDependencyCollection>());
             IoCManager.Resolve<IStatusHost>().SetMagicAczProvider(aczProvider);
 

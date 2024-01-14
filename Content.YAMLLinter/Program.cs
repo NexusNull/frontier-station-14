@@ -13,13 +13,13 @@ namespace Content.YAMLLinter
 {
     internal static class Program
     {
-        private static async Task<int> Main(string[] _)
+        private static async Task<int> Main(string[] args)
         {
             PoolManager.Startup(null);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var (errors, fieldErrors) = await RunValidation();
+            var errors = await RunValidation();
 
             var count = errors.Count + fieldErrors.Count;
 
@@ -48,8 +48,7 @@ namespace Content.YAMLLinter
             return -1;
         }
 
-        private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
-            ValidateClient()
+        private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
             await using var pair = await PoolManager.GetServerClient();
             var client = pair.Client;
@@ -58,8 +57,7 @@ namespace Content.YAMLLinter
             return result;
         }
 
-        private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
-            ValidateServer()
+        private static async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
@@ -68,8 +66,7 @@ namespace Content.YAMLLinter
             return result;
         }
 
-        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateInstance(
-            RobustIntegrationTest.IntegrationInstance instance)
+        public static async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
         {
             var protoMan = instance.ResolveDependency<IPrototypeManager>();
             Dictionary<string, HashSet<ErrorNode>> yamlErrors = default!;
